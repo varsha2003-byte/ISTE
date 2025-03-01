@@ -1,0 +1,110 @@
+#events-mobile{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px;
+}
+
+.mcard-container {
+    position: relative;
+    width: 300px;
+    height: 375px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    transform-style: preserve-3d;
+    transition: transform 1.2s ease-in-out;
+    color: white;
+    opacity: 1;
+}
+
+.mcard-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    z-index: 0;
+}
+
+.mcard-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.mflip {
+    transform: rotateY(360deg);
+}
+
+.mcard-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    text-align: left;
+}
+
+.mcard-description {
+    color: lightgray;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.mbtn {
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    text-decoration: none;
+    align-self: center;
+}
+
+.mbtn:hover {
+    background: rgb(198, 53, 1);
+}
+
+.mnav-buttons {
+    margin-top: 20px;
+}
+
+.mnav-buttons button {
+    padding: 8px 12px;
+    border: none;
+    background: #521300;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 0 5px;
+}
+
+.mnav-buttons button:hover {
+    background: #2a0b01;
+}
+
+
+
+
+
+
+@media (max-width: 768px) {
+    #events-mobile{
+        display: flex;
+    }
+    
+}

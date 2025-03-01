@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pre-Events Information</title>
+  <style>
+    /* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #3c2a21;
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* Network Background */
+.network-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background-image: 
+    radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px;
+}
+
+.network-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(45deg, rgba(60, 42, 33, 0.8) 0%, rgba(60, 42, 33, 0.4) 100%),
+    linear-gradient(to right, rgba(60, 42, 33, 0.8) 0%, rgba(60, 42, 33, 0.4) 100%);
+}
+
+/* Header */
+header {
+  position: relative;
+  z-index: 1;
+  padding: 3rem 0 1.5rem;
+  text-align: center;
+  border-bottom: 1px solid #e67e22;
+}
+
+header h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #f39c12;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Main Content */
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Navigation */
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #d35400;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.nav-btn:hover {
+  background-color: #e67e22;
+}
+
+.event-counter {
+  color: #e67e22;
+  font-weight: 500;
+}
+
+/* Event Card */
+.event-container {
+  position: relative;
+}
+
+.event-card {
+  background: linear-gradient(135deg, #1e1611 0%, #2c1c15 100%);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(230, 126, 34, 0.3);
+}
+
+.event-content {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .event-content {
+    flex-direction: row;
+  }
+}
+
+/* Event Image */
+.event-image {
+  position: relative;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (min-width: 768px) {
+  .event-image {
+    width: 40%;
+    height: auto;
+    object-fit: contain;
+  }
+}
+
+.event-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-date {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 0.75rem;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #e67e22;
+}
+
+.event-label {
+  font-size: 0.75rem;
+  color: #e67e22;
+  margin-bottom: 0.25rem;
+}
+
+.event-day {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f39c12;
+}
+
+.event-month {
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  color: #e67e22;
+}
+
+/* Event Details */
+.event-details {
+  padding: 1.5rem;
+  flex: 1;
+}
+
+.event-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.event-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background-color: #e67e22;
+  color: white;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.event-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f39c12;
+}
+
+/* Event Info */
+.event-info {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+a {
+  text-decoration: none;
+}
+
+@media (min-width: 640px) {
+  .event-info {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  color: #e67e22;
+  margin-right: 0.5rem;
+}
+
+/* Prize Section */
+.prize-section {
+  margin-bottom: 1.5rem;
+}
+
+.prize-label {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #e67e22;
+}
+
+.prize-amount {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #f39c12;
+}
+
+/* Platform Section */
+.platform-section {
+  margin-bottom: 1.5rem;
+}
+
+.platform-label {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #e67e22;
+}
+
+.platform-badge {
+  display: inline-flex;
+  align-items: center;
+  background-color: #2c1c15;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  border: 1px solid #e67e22;
+}
+
+.platform-indicator {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: #e67e22;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+/* Quote Section */
+.quote-section {
+  border-top: 1px solid #e67e22;
+  padding-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+blockquote {
+  font-style: italic;
+  color: #f5f5f5;
+  margin-bottom: 0.5rem;
+}
+
+cite {
+  color: #e67e22;
+}
+
+/* Event Description */
+.event-description {
+  color: #f5f5f5;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+/* Contact Section */
+.contact-section {
+  background-color: #2c1c15;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(230, 126, 34, 0.3);
+}
+
+.contact-label {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #e67e22;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .contact-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.contact-person {
+  display: flex;
+  align-items: center;
+}
+
+.contact-name {
+  font-weight: 500;
+  margin-right: 0.5rem;
+  color: #f39c12;
+}
+
+/* Event Footer */
+.event-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1e1611;
+  padding: 1rem;
+  border-top: 1px solid rgba(230, 126, 34, 0.3);
+}
+
+.organizer-info {
+  display: flex;
+  align-items: center;
+}
+
+.organizer-logo {
+  background-color: #2c1c15;
+  padding: 0.25rem;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  border: 1px solid #e67e22;
+}
+
+.organizer-initial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background-color: #e67e22;
+  color: white;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.register-btn {
+  display: flex;
+  align-items: center;
+  background-color: #e67e22;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.register-btn:hover {
+  background-color: #d35400;
+}
+
+.register-btn svg {
+  margin-left: 0.5rem;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2c1c15;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e67e22;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d35400;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .network-bg {
+    background-size: 30px 30px;
+  }
+  
+  header h1 {
+    font-size: 2.5rem;
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="network-bg"></div>
+  
+  <!-- Header -->
+  <header>
+    <h1>PRE-EVENTS</h1>
+  </header>
+  
+  <!-- Main Content -->
+  <main>
+    <div class="navigation">
+      <button id="prev-btn" class="nav-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      
+      <div class="event-counter">
+        <span id="current-event">Event 1 of 3</span>
+      </div>
+      
+      <button id="next-btn" class="nav-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+    </div>
+    
+    <div class="event-container">
+       <!-- Event 1-->
+       <div class="event-card" data-event="2" style="display: none;">
+        <div class="event-content">
+          <div class="event-image">
+            <img src="assets/pre5.jpeg" alt="numerIQ">
+            <div class="event-date">
+              <div class="event-label">Date</div>
+              <div class="event-day">27</div>
+              <div class="event-month">FEB</div>
+            </div>
+          </div>
+          
+          <div class="event-details">
+            <div class="event-header">
+              <div class="event-icon">N</div>
+              <h2 class="event-title">numerIQ</h2>
+            </div>
+            
+            <div class="event-info">
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                <span>FEB 27, 2025</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>07:00 PM</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Online</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>ISTE GECK </span>
+              </div>
+            </div>
+            
+            <div class="platform-section">
+              <div class="platform-label">Platform</div>
+              <div class="platform-badge">
+                <span class="platform-indicator"></span>
+                <span>Mentimeter</span>
+              </div>
+            </div>
+            
+            
+            <div class="quote-section">
+              <blockquote>"Mathematics is not about numbers, equations, computations, or algorithms: it is about understanding."
+               
+                </blockquote>
+              <cite>~William Paul Thurston
+        
+              </cite>
+            </div>
+            
+            <p class="event-description">
+              A timed math challenge to test your speed and accuracy across a variety of mathematical problems!
+            </p>
+            
+            <div class="contact-section">
+              <div class="contact-label">Contact Information</div>
+              <div class="contact-grid">
+                <div class="contact-person">
+                  <span class="contact-name">Junite Rose :
+                
+                    
+                   </span>
+                  <span class="contact-phone">  8714897303</span>
+                </div>
+                <div class="contact-person">
+                  <span class="contact-name">     Suryadev :</span>
+                  <span class="contact-phone">9446273347 </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="event-footer">
+          <div class="organizer-info">
+            <div class="organizer-logo">
+              <div class="organizer-initial">I</div>
+            </div>
+            <span>ISTE GECK Students Chapter</span>
+          </div>
+          
+          <a href="https://tinyurl.com/NumerIQ"><button class="register-btn">
+            Register Now
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+          </button></a>
+        </div>
+      </div>
+
+       <!-- Event 2 -->
+       <div class="event-card" data-event="2" style="display: none;">
+        <div class="event-content">
+          <div class="event-image">
+            <img src="assets/pre4.jpeg" alt="game on">
+            <div class="event-date">
+              <div class="event-label">Date</div>
+              <div class="event-day">27</div>
+              <div class="event-month">FEB</div>
+            </div>
+          </div>
+          
+          <div class="event-details">
+            <div class="event-header">
+              <div class="event-icon">G</div>
+              <h2 class="event-title">GAME ON</h2>
+            </div>
+            
+            <div class="event-info">
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                <span>FEB 27, 2025</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>04:30 PM</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Main Entrance</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>ISTE GECK </span>
+              </div>
+            </div>
+            
+             
+            
+            
+            <div class="quote-section">
+              <blockquote>"A game is a complete exploration of freedom within a restrictive environment"
+                
+                </blockquote>
+              <cite>~Vineet Raj Kapoor
+              </cite>
+            </div>
+            
+            <p class="event-description">
+              Game Series which fostering a sense of creative thinking , and providing a foundation for developing fundamental skills.
+
+            </p>
+            
+            <div class="contact-section">
+              <div class="contact-label">Contact Information</div>
+              <div class="contact-grid">
+                <div class="contact-person">
+                  <span class="contact-name">Swabha :
+                    
+                   </span>
+                  <span class="contact-phone"> 7736248010</span>
+                </div>
+                <div class="contact-person">
+                  <span class="contact-name"> Hanan : </span>
+                  <span class="contact-phone"> 9946902439</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="event-footer">
+          <div class="organizer-info">
+            <div class="organizer-logo">
+              <div class="organizer-initial">I</div>
+            </div>
+            <span>ISTE GECK Students Chapter</span>
+          </div>
+          
+          <a href="https://tinyurl.com/IGNIFEX-Gameon"><button class="register-btn">
+            Register Now
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+          </button></a>
+        </div>
+      </div>
+       <!-- Event 3 -->
+       <div class="event-card" data-event="2" style="display: none;">
+        <div class="event-content">
+          <div class="event-image">
+            <img src="assets/pre3.jpeg" alt="meme tech">
+            <div class="event-date">
+              <div class="event-label">Date</div>
+              <div class="event-day">28</div>
+              <div class="event-month">FEB</div>
+            </div>
+          </div>
+          
+          <div class="event-details">
+            <div class="event-header">
+              <div class="event-icon">M</div>
+              <h2 class="event-title">MEME TECH</h2>
+            </div>
+            
+            <div class="event-info">
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                <span>February 28, 2025</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>7:00 PM</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Online</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>ISTE GECK</span>
+              </div>
+            </div>
+
+            <div class="platform-section">
+              <div class="platform-label">Platform</div>
+              <div class="platform-badge">
+                <span class="platform-indicator"></span>
+                <span>Google Forms</span>
+              </div>
+            </div>
+            
+            
+            <div class="quote-section">
+              <blockquote>"𝘚𝘰𝘮𝘦  𝘱𝘦𝘰𝘱𝘭𝘦 𝘨𝘳𝘢𝘥𝘶𝘢𝘵𝘦 𝘸𝘪𝘵𝘩 𝘩𝘰𝘯𝘰𝘶𝘳𝘴, 𝘐'𝘮 𝘫𝘶𝘴𝘵 𝘩𝘰𝘯𝘰𝘶𝘳𝘦𝘥 𝘵𝘰 𝘨𝘳𝘢𝘥𝘶𝘢𝘵𝘦." 
+                
+ 
+
+ </blockquote>
+              <cite>~𝘑𝘰𝘩𝘯. 𝘍. 𝘒𝘦𝘯𝘯𝘦𝘥𝘺
+              </cite>
+            </div>
+            
+            <p class="event-description">
+              Meme making is the art of blending humor, relatability and cultural references into shareable images or videos
+            </p>
+            
+            <div class="contact-section">
+              <div class="contact-label">Contact Information</div>
+              <div class="contact-grid">
+                <div class="contact-person">
+                  <span class="contact-name">Ganga:
+                    </span>
+                  <span class="contact-phone">9656632580</span>
+                </div>
+                <div class="contact-person">
+                  <span class="contact-name">Celestine :</span>
+                  <span class="contact-phone">8078770135</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="event-footer">
+          <div class="organizer-info">
+            <div class="organizer-logo">
+              <div class="organizer-initial">I</div>
+            </div>
+            <span>ISTE GECK Students Chapter</span>
+          </div>
+          
+          <a href="https://tinyurl.com/IGNIFEX-Memetek
+          "><button class="register-btn">
+            Register Now
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+          </button></a>
+        </div>
+      </div>
+
+            <!-- Event 4 -->
+            <div class="event-card" data-event="2" style="display: none;">
+              <div class="event-content">
+                <div class="event-image">
+                  <img src="assets/pre6.jpeg" alt="iot mastery">
+                  <div class="event-date">
+                    <div class="event-label">Date</div>
+                    <div class="event-day">28</div>
+                    <div class="event-month">feb</div>
+                  </div>
+                </div>
+                
+                <div class="event-details">
+                  <div class="event-header">
+                    <div class="event-icon">I</div>
+                    <h2 class="event-title">IOT MASTERY TRAINING</h2>
+                  </div>
+                  
+                  <div class="event-info">
+                    <div class="info-item">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                      <span>FEBRUARY 28, 2025</span>
+                    </div>
+                    <div class="info-item">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      <span>07:00 PM</span>
+                    </div>
+                    <div class="info-item">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                      <span>Online</span>
+                    </div>
+                    <div class="info-item">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                      <span>ISTE GECK </span>
+                    </div>
+                  </div>
+                  
+                   
+                  <div class="platform-section">
+                    <div class="platform-label">Platform</div>
+                    <div class="platform-badge">
+                      <span class="platform-indicator"></span>
+                      <span>Google meet</span>
+                    </div>
+                  </div>
+                  
+                  <div class="quote-section">
+                    <blockquote>oT is not just a technology, it's a new way of life." 
+                      
+      </blockquote>
+                    <cite>~  Jacob Morgan </cite>
+                  </div>
+                  
+                  <p class="event-description">
+                    IOT Mastery Training is your chance to explore the exciting world of the Internet of Things. Join us to gain valuable insights, and expert guidance on how IoT is shaping the future.
+      
+      
+                  </p>
+                  
+                  <div class="contact-section">
+                    <div class="contact-label">Contact Information</div>
+                    <div class="contact-grid">
+                      <div class="contact-person">
+                        <span class="contact-name">Devika :
+                         
+                         </span>
+                        <span class="contact-phone"> 9496883057</span>
+                      </div>
+                      <div class="contact-person">
+                        <span class="contact-name">  Nandana V P :</span>
+                        <span class="contact-phone">8921856539</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="event-footer">
+                <div class="organizer-info">
+                  <div class="organizer-logo">
+                    <div class="organizer-initial">I</div>
+                  </div>
+                  <span>ISTE GECK Students Chapter</span>
+                </div>
+                
+                <a href=" https://tinyurl.com/IGNIFEX-IOT-Mastery-Training
+                "><button class="register-btn">
+                  Register Now
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                </button></a>
+              </div>
+            </div>
+
+      <!-- Event 5 -->
+      <div class="event-card" data-event="1">
+        <div class="event-content">
+          <div class="event-image">
+            <img src="assets/pre1.jpeg" alt="introduction to ai">
+            <div class="event-date">
+              <div class="event-label">Date</div>
+              <div class="event-day">01</div>
+              <div class="event-month">MAR</div>
+            </div>
+          </div>
+          
+          <div class="event-details">
+            <div class="event-header">
+              <div class="event-icon">I</div>
+              <h2 class="event-title">INTRODUCTION TO AI MASTERY TRAINING</h2>
+            </div>
+            
+            <div class="event-info">
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                <span>March 01, 2025</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>7:00 PM</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Online</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>ISTE GECK </span>
+              </div>
+            </div>
+           
+  
+            <div class="platform-section">
+              <div class="platform-label">Platform</div>
+              <div class="platform-badge">
+                <span class="platform-indicator"></span>
+                <span>Google meet</span>
+              </div>
+            </div>
+            
+            <div class="quote-section">
+              <blockquote>"Artificial intelligence is the tool that will enable humanity to reach new frontiers."  
+                </blockquote>
+              <cite>~Demis Hassabis</cite>
+            </div>
+            
+            <p class="event-description">
+              This AI Mastery Training is your gateway to understanding the fundamentals of Artificial Intelligence. Gain in-depth knowledge, hands-on experience, and expert guidance on how AI is transforming industries and shaping the future!  
+            </p>
+            
+            <div class="contact-section">
+              <div class="contact-label">Contact Information</div>
+              <div class="contact-grid">
+                <div class="contact-person">
+                  <span class="contact-name">Saja Bint Sabeel : 
+                   </span>
+                  <span class="contact-phone">8547714232 
+                   </span>
+                </div>
+                <div class="contact-person">
+                  <span class="contact-name"> Anusree S: </span>
+                  <span class="contact-phone">70123 58846</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="event-footer">
+          <div class="organizer-info">
+            <div class="organizer-logo">
+              <div class="organizer-initial">I</div>
+            </div>
+            <span>ISTE GECK Students Chapter</span>
+          </div>
+          
+          <a href="https://tinyurl.com/INGIFEX-AI-MASTERY-TRAINING">
+            <button class="register-btn">
+            Register Now
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+          </button></a>
+        </div>
+      </div>
+      
+
+       <!-- Event 6 -->
+      <div class="event-card" data-event="2" style="display: none;">
+        <div class="event-content">
+          <div class="event-image">
+            <img src="assets/pre2.jpeg" alt="Kochi metro">
+            <div class="event-date">
+              <div class="event-label">Date</div>
+              <div class="event-day">01</div>
+              <div class="event-month">MAR</div>
+            </div>
+          </div>
+          
+          <div class="event-details">
+            <div class="event-header">
+              <div class="event-icon">S</div>
+              <h2 class="event-title">STRATAGIES FOR INCREASING KOCHI WATER METRO RIDERSHIP</h2>
+            </div>
+            
+            <div class="event-info">
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                <span>March 01, 2025</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>10:00 AM</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Online</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>ISTE GECK </span>
+              </div>
+            </div>
+            
+             
+            <div class="platform-section">
+              <div class="platform-label">Platform</div>
+              <div class="platform-badge">
+                <span class="platform-indicator"></span>
+                <span>Google meet</span>
+              </div>
+            </div>
+            
+            <div class="quote-section">
+              <blockquote>" A developed country is not a place where the poor have cars. It’s where the rich use public transportation ."
+               
+                </blockquote>
+              <cite>~ Enrique Peñalosa</cite>
+            </div>
+            
+            <p class="event-description">
+              Strategies for Increasing Kochi Water Metro Ridership : Focusing on User Satisfaction and Perception Metrics  🚆🚢.
+
+            </p>
+            
+            <div class="contact-section">
+              <div class="contact-label">Contact Information</div>
+              <div class="contact-grid">
+                <div class="contact-person">
+                  <span class="contact-name">Riza K.P :
+                   </span>
+                  <span class="contact-phone">9995628707</span>
+                </div>
+                <div class="contact-person">
+                  <span class="contact-name"> Riya Hanna K.V :</span>
+                  <span class="contact-phone"> 9778406586</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="event-footer">
+          <div class="organizer-info">
+            <div class="organizer-logo">
+              <div class="organizer-initial">I</div>
+            </div>
+            <span>ISTE GECK Students Chapter</span>
+          </div>
+          
+          <a href="https://tinyurl.com/TT2-ignifex"><button class="register-btn">
+            Register Now
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+          </button></a>
+        </div>
+      </div>
+      
+     
+       <!-- Event 7 -->
+       <div class="event-card" data-event="2" style="display: none;">
+        <div class="event-content">
+          <div class="event-image">
+            <img src="assets/pre7.jpeg" alt="robotics">
+            <div class="event-date">
+              <div class="event-label">Date</div>
+              <div class="event-day">27</div>
+              <div class="event-month">FEB</div>
+            </div>
+          </div>
+          
+          <div class="event-details">
+            <div class="event-header">
+              <div class="event-icon">R</div>
+              <h2 class="event-title"> RECENT TRENDS IN ROBOTICS</h2>
+            </div>
+            
+            <div class="event-info">
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                <span>February 27, 2025</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>08:00 PM</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Online</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>ISTE GECK </span>
+              </div>
+            </div>
+            
+             
+            <div class="platform-section">
+              <div class="platform-label">Platform</div>
+              <div class="platform-badge">
+                <span class="platform-indicator"></span>
+                <span>Google meet</span>
+              </div>
+            </div>
+            
+            <div class="quote-section">
+              <blockquote>" The rise of robotics is not just about machines; it's about redefining the future of innovation ."
+
+                </blockquote>
+               
+            </div>
+            
+            <p class="event-description">
+              Dive into the latest breakthroughs, advancements, and real-world applications of robotics with expert insights.
+            </p>
+            
+            <div class="contact-section">
+              <div class="contact-label">Contact Information</div>
+              <div class="contact-grid">
+                <div class="contact-person">
+                  <span class="contact-name">Riza K.P :
+                   </span>
+                  <span class="contact-phone">9995628707</span>
+                </div>
+                <div class="contact-person">
+                  <span class="contact-name"> Riya Hanna K.V :</span>
+                  <span class="contact-phone"> 9778406586</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="event-footer">
+          <div class="organizer-info">
+            <div class="organizer-logo">
+              <div class="organizer-initial">I</div>
+            </div>
+            <span>ISTE GECK Students Chapter</span>
+          </div>
+          
+          <a href="https://tinyurl.com/TT-ignifex"><button class="register-btn">
+            Register Now
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+          </button></a>
+        </div>
+      </div>
+
+       <!-- Event 8-->
+       <div class="event-card" data-event="2" style="display: none;">
+        <div class="event-content">
+          <div class="event-image">
+            <img src="assets/pre8.jpeg" alt="survival spirit">
+            <div class="event-date">
+              <div class="event-label">Date</div>
+              <div class="event-day">26</div>
+              <div class="event-month">FEB</div>
+            </div>
+          </div>
+          
+          <div class="event-details">
+            <div class="event-header">
+              <div class="event-icon">P</div>
+              <h2 class="event-title">PLANOPOLIS</h2>
+            </div>
+            
+            <div class="event-info">
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                <span>February 26, 2025</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>07:00 PM</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Online</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>ISTE GECK </span>
+              </div>
+            </div>
+            
+             
+            <div class="platform-section">
+              <div class="platform-label">Platform</div>
+              <div class="platform-badge">
+                <span class="platform-indicator"></span>
+                <span>Online</span>
+              </div>
+            </div>
+            
+            
+
+            <div class="quote-section">
+              <blockquote>"We shape our buildings; thereafter they shape us " </blockquote>
+                <cite>~Winston Churchill</cite>
+             
+        
+                
+               
+            </div>
+            
+            <p class="event-description">
+              A Virtual City Planning Simulator Competition.
+
+ IMAGINE . DESIGN . BUILD 
+
+            </p>
+            
+            <div class="contact-section">
+              <div class="contact-label">Contact Information</div>
+              <div class="contact-grid">
+                <div class="contact-person">
+                  <span class="contact-name">Aswin v : 
+                    
+                   </span>
+                  <span class="contact-phone">6282772466</span>
+                </div>
+                <div class="contact-person">
+                  <span class="contact-name"> Sayooj c :</span>
+                  <span class="contact-phone"> 9207942866</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="event-footer">
+          <div class="organizer-info">
+            <div class="organizer-logo">
+              <div class="organizer-initial">I</div>
+            </div>
+            <span>ISTE GECK Students Chapter</span>
+          </div>
+          
+          <a href=" https://tinyurl.com/IGNIFEX-Planopolis
+ "><button class="register-btn">
+            Register Now
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+          </button></a>
+        </div>
+      </div>
+
+
+      <!-- Event 9 -->
+      <div class="event-card" data-event="2" style="display: none;">
+        <div class="event-content">
+          <div class="event-image">
+            <img src="assets/pre8.jpeg" alt="SURVIVALSPIRIT">
+            <div class="event-date">
+              <div class="event-label">Date</div>
+              <div class="event-day">26</div>
+              <div class="event-month">FEB</div>
+            </div>
+          </div>
+          
+          <div class="event-details">
+            <div class="event-header">
+              <div class="event-icon">S</div>
+              <h2 class="event-title"> SURVIVALSPIRIT</h2>
+
+            </div>
+            
+            <div class="event-info">
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                <span>February 26, 2025</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>07:00 PM</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Online</span>
+              </div>
+              <div class="info-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>ISTE GECK </span>
+              </div>
+            </div>
+            
+             
+            <div class="platform-section">
+              <div class="platform-label">Platform</div>
+              <div class="platform-badge">
+                <span class="platform-indicator"></span>
+                <span>Virtual platform</span>
+              </div>
+            </div>
+            
+             
+
+            <div class="quote-section">
+              <blockquote>"To live is to suffer, to survive is to find some meaning in the suffering."
+                  </blockquote>
+               <cite>~Friedrich Nietzsche  </cite>
+            </div>
+            
+            <p class="event-description">
+              Gear up for an action-packed Free Fire Tournament! Assemble your squad, outwit your rivals, and be the last team standing to claim the title. Bring your A-game and battle it out in the ultimate survival game.
+            </p>
+            
+            <div class="contact-section">
+              <div class="contact-label">Contact Information</div>
+              <div class="contact-grid">
+                <div class="contact-person">
+                  <span class="contact-name">Sebin : 
+                    
+                   </span>
+                  <span class="contact-phone">7902403272</span>
+                </div>
+                <div class="contact-person">
+                  <span class="contact-name"> Amal :</span>
+                  <span class="contact-phone">9746033156</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="event-footer">
+          <div class="organizer-info">
+            <div class="organizer-logo">
+              <div class="organizer-initial">I</div>
+            </div>
+            <span>ISTE GECK Students Chapter</span>
+          </div>
+          
+          <a href="https://tinyurl.com/IGNIFEX-Survivalspirit"><button class="register-btn">
+            Register Now
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+          </button></a>
+        </div>
+      </div>
+     
+
+       
+                  <script>
+                  document.addEventListener("DOMContentLoaded", () => {
+  const prevBtn = document.getElementById("prev-btn");
+  const nextBtn = document.getElementById("next-btn");
+  const eventCards = document.querySelectorAll(".event-card");
+  const eventCounter = document.getElementById("current-event");
+
+  let currentIndex = 0;
+
+  function updateEventDisplay() {
+    eventCards.forEach((card, index) => {
+      card.style.display = index === currentIndex ? "block" : "none";
+    });
+    eventCounter.textContent = `Event ${currentIndex + 1} of ${eventCards.length}`;
+
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentIndex === eventCards.length - 1;
+  }
+
+  prevBtn.addEventListener("click", () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateEventDisplay();
+    }
+  });
+
+  nextBtn.addEventListener("click", () => {
+    if (currentIndex < eventCards.length - 1) {
+      currentIndex++;
+      updateEventDisplay();
+    }
+  });
+
+  updateEventDisplay();
+});
+
+                    </script>
+                    </body>
+                    </html>
+                    
